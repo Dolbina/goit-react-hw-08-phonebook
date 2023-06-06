@@ -2,21 +2,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { ListWrap, ButtonWrap } from './ContactList.styled';
-import { deleteContact, fetchContacts } from 'redux/operations';
-import { getContactsFilter, getIsLoading, getError } from 'redux/selector';
-
+import { deleteContact, fetchContacts } from 'redux/contacts/operations';
+import {
+  setContactsFilter,
+  setIsLoading,
+  setError,
+} from 'redux/contacts/selector';
 
 export const ContactList = () => {
-const dispatch = useDispatch();
-const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  
-useEffect(() => {
-  dispatch(fetchContacts());
-}, [dispatch]);
-  
-  const filteredContacts = useSelector(getContactsFilter);
-  
+  const dispatch = useDispatch();
+  const isLoading = useSelector(setIsLoading);
+  const error = useSelector(setError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  const filteredContacts = useSelector(setContactsFilter);
+
   if (!filteredContacts?.length) {
     return <p>No contacts found.</p>;
   }
@@ -34,4 +37,3 @@ useEffect(() => {
     </ListWrap>
   );
 };
-
